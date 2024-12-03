@@ -16,30 +16,97 @@ class House:
     def __len__(self) -> int:
         return self.number_of_floors
 
-    def __eq__(self, other):
-        return self.number_of_floors == other.number_of_floors
+    def __eq__(self, other) -> bool:
+        if isinstance(other, House):
+            return self.number_of_floors == other.number_of_floors
+        elif isinstance(other, int):
+            return self.number_of_floors == other
 
-    def __le__(self, other):
-        return self.number_of_floors <= other.number_of_floors
+    def __le__(self, other) -> bool:
+        if isinstance(other, House):
+            return self.number_of_floors <= other.number_of_floors
+        elif isinstance(other, int):
+            return self.number_of_floors <= other
 
-    def __lt__(self, other):
-        return self.number_of_floors < other.number_of_floors
+    def __lt__(self, other) -> bool:
+        if isinstance(other, House):
+            return self.number_of_floors < other.number_of_floors
+        elif isinstance(other, int):
+            return self.number_of_floors < other
 
-    def __gt__(self, other):
-        return self.number_of_floors > other.number_of_floors
+    def __gt__(self, other) -> bool:
+        if isinstance(other, House):
+            return self.number_of_floors > other.number_of_floors
+        elif isinstance(other, int):
+            return self.number_of_floors > other
 
-    def __ge__(self, other):
-        return self.number_of_floors >= other.number_of_floors
+    def __ge__(self, other) -> bool:
+        if isinstance(other, House):
+            return self.number_of_floors >= other.number_of_floors
+        elif isinstance(other, int):
+            return self.number_of_floors >= other
 
-    def __ne__(self, other):
-        return self.number_of_floors != other.number_of_floors
+    def __ne__(self, other) -> bool:
+        if isinstance(other, House):
+            return self.number_of_floors != other.number_of_floors
+        elif isinstance(other, int):
+            return self.number_of_floors != other
 
-    def __add__(self, value):
-        return self.number_of_floors + value
+    def __add__(self, other) -> object:
+        if isinstance(other, int):
+            self.number_of_floors += other
+        elif isinstance(other, House):
+            self.number_of_floors += other.number_of_floors
+        return self
 
-    def __iadd__(self, value):
-        return self.number_of_floors + int(value)
+    def __iadd__(self, other) -> object:
+        return self.__add__(other)
 
+    def __radd__(self, other) -> object:
+        return self.__add__(other)
+
+    def __mul__(self, other) -> object:
+        if isinstance(other, int):
+            self.number_of_floors *= other
+        elif isinstance(other, House):
+            self.number_of_floors *= other.number_of_floors
+        return self
+
+    def __imul__(self, other) -> object:
+        return self.__mul__(other)
+
+    def __rmul__(self, other) -> object:
+        return self.__mul__(other)
+
+    def __truediv__(self, other) -> object:
+        if isinstance(other, int):
+            self.number_of_floors /= other
+        elif isinstance(other, House):
+            self.number_of_floors /= other.number_of_floors
+        return self
+
+    def __itruediv__(self, other) -> object:
+        return self.__truediv__(other)
+
+    def __rtruediv__(self, other) -> object:
+        if isinstance(other, int):
+            self.number_of_floors = other / self.number_of_floors
+        return self
+
+    def __sub__(self, other) -> object:
+        if isinstance(other, int):
+            self.number_of_floors -= other
+        elif isinstance(other, House):
+            self.number_of_floors -= other.number_of_floors
+        return self
+
+    def __isub__(self, other) -> object:
+        return self.__sub__(other)
+
+    def __rsub__(self, other) -> object:
+        if isinstance(other, int):
+            self.number_of_floors = other - self.number_of_floors
+        return self
 
 
 h1 = House('ЖК Матрешки', 14)
@@ -60,16 +127,34 @@ print(h1 == h2)
 h1.number_of_floors = 17
 print(h1 == h2)
 
-print(h1 > h2) # __gt__
-print(h1 >= h2) # __ge__
-print(h1 < h2) # __lt__
-print(h1 <= h2) # __le__
-print(h1 != h2) # __ne__
+print(h1 > h2)  # __gt__
+print(h1 >= h2)  # __ge__
+print(h1 < h2)  # __lt__
+print(h1 <= h2)  # __le__
+print(h1 != h2)  # __ne__
 
-h1 = h1 + 10 # __add__
+h1 = h1 + 10  # __add__
 print(h1)
 print(h1 == h2)
 
-h1 += 10 # __iadd__
+h1 += 10  # __iadd__
 print(h1)
 print(h1 == h2)
+
+h2 = 10 + h2  # __radd__
+print(h2)
+
+h1 = h1 * 2  # __mul__
+print(h1)
+
+h1 = h1 / 2  # __truediv__
+print(h1)
+
+h1 = h1 - 5  # __sub__
+print(h1)
+
+h1 /= 10  # __itruediv__
+print(h1)
+
+h1 = 15 / h1  # __rtruediv__
+print(h1)
